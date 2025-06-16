@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block title %}Staff Members{% endblock %} {% block
+content %}
+<h1>Staff Members</h1>
+<div>
+  <h2>Staff Details</h2>
+  {% for member in staff %}
+  <div class="card">
+    <h3>{{ member.name }}</h3>
+    <p><strong>Position:</strong> {{ member.position }}</p>
+    <p><strong>Department:</strong> {{ member.department }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block title %}Staff Members{% endblock %} {% block
+content %}
+<h1>Staff Members</h1>
+<div>
+  <h2>Staff Details</h2>
+  {% for key, value in staffDict.items() %}
+  <div class="card">
+    <div>Name: {{value.name}}</div>
+    <div>Postion: {{value.position}}</div>
+    <div>Department: {{value.department}}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

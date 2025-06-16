@@ -3,11 +3,10 @@ content %}
 <h1>Staff Members</h1>
 <div>
   <h2>Staff Details</h2>
-  {% for key, value in staffDict.items() %}
-  <div class="field">
-    <span class="label">{{ key.capitalize() }}:</span>
-    <span>{{ value }}</span>
+  <div class="card">
+    {% for key, value in staffDict.items() %}
+    <p class="label"><strong>{{ key.capitalize() }}:</strong> {{ value }}</p>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>
 {% endblock %}

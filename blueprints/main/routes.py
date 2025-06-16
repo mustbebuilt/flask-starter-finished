@@ -44,6 +44,6 @@ def staffdata():
     json_path = os.path.join(current_app.static_folder, 'data/staff.json')
     with open(json_path) as f:
         staff_data = json.load(f)
-    return render_template('from_json.html', staff=staff_data)
+    return render_template('from_json.html', staffData=staff_data)
 
     

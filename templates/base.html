@@ -8,12 +8,16 @@
     />
   </head>
   <body>
-    {% include 'partials/header.html' %}
-    <!-- Header content goes here -->
-
-    {% block content %}
-    <!-- Page-specific content goes here -->
-    {% endblock %} {% include 'partials/footer.html' %}
-    <!-- Footer content goes here -->
+    <div class="container">
+      <main>
+        {% include 'partials/header.html' %}
+        <!-- Header content goes here -->
+        {% block content %}
+        <!-- Page-specific content goes here -->
+        {% endblock %}
+      </main>
+      {% include 'partials/footer.html' %}
+      <!-- Footer content goes here -->
+    </div>
   </body>
 </html>

@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block title %}Staff Members{% endblock %} {% block
+content %}
+<h1>Staff Members</h1>
+
+<form method="get" action="{{ url_for('main.json_filtered') }}">
+  <label for="department">Filter by Department:</label>
+  <input
+    type="text"
+    name="department"
+    id="department"
+    value="{{ selected or '' }}"
+  />
+  <button type="submit">Filter</button>
+</form>
+
+{% if selected %}
+<p>Showing results for department: <strong>{{ selected }}</strong></p>
+{% endif %}
+
+<div>
+  <div class="flex">
+    {% for staff in staffData %}
+    <div class="card">
+      {% for key, value in staff.items() %}
+      <div><strong>{{ key | title }}:</strong> {{ value }}</div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>No results found.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 import os
 import json
-from flask import render_template, current_app
+from flask import request, render_template, current_app
 from . import main
 
 @main.route('/')
@@ -45,5 +45,45 @@ def staffdata():
     with open(json_path) as f:
         staff_data = json.load(f)
     return render_template('from_json.html', staffData=staff_data)
+@main.route('/json_filtered', methods=['GET'])
+def json_filtered():
+    json_path = os.path.join(current_app.static_folder, 'data/staff.json')
+    with open(json_path) as f:
+        staff_data = json.load(f)
 
-    
+    # Get department from query string (form)
+    department_filter = request.args.get('department')
+
+    # Apply filter if form submitted
+    if department_filter:
+        filtered_data = [s for s in staff_data if s['department'].lower() == department_filter.lower()]
+    else:
+        filtered_data = staff_data
+
+    return render_template('json_filtered.html', staffData=filtered_data, selected=department_filter)
+@main.route('/json_dropdown', methods=['GET'])
+def json_dropdown():
+    json_path = os.path.join(current_app.static_folder, 'data/staff.json')
+    with open(json_path) as f:
+        staff_data = json.load(f)
+
+    # Extract unique department names for the dropdown
+    departments = sorted({s['department'] for s in staff_data})
+
+    # Get selected department from query string
+    selected_department = request.args.get('department')
+
+    # Filter if a department is selected
+    if selected_department:
+        filtered_data = [
+            s for s in staff_data if s['department'].lower() == selected_department.lower()
+        ]
+    else:
+        filtered_data = staff_data
+
+    return render_template(
+        'json_dropdown.html',
+        staffData=filtered_data,
+        departments=departments,
+        selected=selected_department
+    )

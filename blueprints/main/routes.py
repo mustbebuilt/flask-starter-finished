@@ -2,6 +2,8 @@ import os
 import json
 from flask import request, render_template, current_app
 from . import main
+from config import db_config
+import mysql.connector
 
 @main.route('/')
 def index():
@@ -87,3 +89,12 @@ def json_dropdown():
         departments=departments,
         selected=selected_department
     )
+@main.route('/db_data')
+def db_data():
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM course")
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template('db_data.html', data=data)

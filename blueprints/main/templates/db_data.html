@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block title %}Welcome{% endblock %} {% block
+content %}
+<h2>Courses</h2>
+<ul>
+  {% for course in data %}
+  <li>{{ course['CourseTitle'] }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

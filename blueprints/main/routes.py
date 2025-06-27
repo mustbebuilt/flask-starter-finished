@@ -93,7 +93,7 @@ def json_dropdown():
 def db_data():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM course")
+    cursor.execute("SELECT * FROM films")
     data = cursor.fetchall()
     cursor.close()
     conn.close()

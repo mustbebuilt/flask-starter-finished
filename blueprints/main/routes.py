@@ -93,8 +93,22 @@ def json_dropdown():
 def db_data():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM films")
+    cursor.execute("SELECT * FROM staff")
     data = cursor.fetchall()
     cursor.close()
     conn.close()
     return render_template('db_data.html', data=data)
+@main.route('/staff/<int:staff_id>')
+def staff_details(staff_id):
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM staff WHERE id = %s", (staff_id,))
+    staff = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    
+    if staff:
+        return render_template('staff_details.html', staff=staff)
+    else:
+        return "Staff member not found", 404
+   

@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block title %}Welcome{% endblock %} {% block
+    content %}
+    <h1>Details for  {{ staff.first_name }} {{ staff.last_name }}</h1>
+    <ul>
+        <li>ID: {{ staff.id }}</li>
+        <li>Department: {{ staff.department }}</li>
+        <li>Email: {{ staff.email }}</li>
+
+    </ul>
+    <a href="{{ url_for('main.db_data') }}">Back to staff list</a>
+    {% endblock %}

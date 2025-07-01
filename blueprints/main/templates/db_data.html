@@ -1,10 +1,14 @@
 {% extends 'base.html' %} {% block title %}Welcome{% endblock %} {% block
 content %}
-<h2>Films</h2>
+<h2>Staff</h2>
+<h1>All Staff</h1>
 <ul>
-  {% for film in data %}
-  <li>{{ film['film_title'] }}</li>
-  {% endfor %}
+    {% for member in data %}
+        <li>
+            {{ member.first_name }}  {{ member.last_name }} —
+            <a href="{{ url_for('main.staff_details', staff_id=member.id) }}">View Details</a>
+        </li>
+    {% endfor %}
 </ul>
 
 {% endblock %}

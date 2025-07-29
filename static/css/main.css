@@ -66,6 +66,14 @@ main {
     flex: 1;
     /* Pushes footer down */
 }
+form>div{
+    margin-bottom: 1rem;
+}
+label {
+    display: block;
+    margin-bottom: 0rem;
+    font-weight: bold;
+}
 footer {
     background-color: var(--primary-color);
     color: var(--white-color);

@@ -20,7 +20,7 @@ body {
 .container {
     width: 100%;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0;
     min-height: 100%;
     display: flex;
     flex-direction: column;
@@ -40,7 +40,6 @@ body {
 }
 nav{
     background-color: var(--primary-color);
-    border-radius: 8px;
     margin-bottom: 2rem;
     padding:1rem 2rem;
 }
@@ -64,6 +63,7 @@ nav > menu > li > a:hover {
 }
 main {
     flex: 1;
+    padding: 1rem;
     /* Pushes footer down */
 }
 form>div{
@@ -79,18 +79,25 @@ footer {
     color: var(--white-color);
     text-align: center;
     padding: 1rem;
-    border-radius: 8px;
 }
 /* Desktop rules */
-@media (min-width: 600px) {
+@media (min-width: 800px) {
     .container {
         max-width: 1200px;
+        padding: 1rem;
         margin: 0 auto;
+    }
+    nav{
+        border-radius: 8px;
     }
     nav > menu {
         flex-direction: row;
+        flex-wrap: wrap;
     }
     nav > menu > li {
         margin-right: 1rem;
+    }
+    footer{
+        border-radius: 8px;
     }
 }

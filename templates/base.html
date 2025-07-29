@@ -6,11 +6,13 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/main.css') }}"
     />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <div class="container">
+      {% include 'partials/header.html' %}
       <main>
-        {% include 'partials/header.html' %}
         <!-- Header content goes here -->
         {% block content %}
         <!-- Page-specific content goes here -->

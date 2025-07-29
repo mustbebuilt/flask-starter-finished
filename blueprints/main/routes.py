@@ -1,6 +1,6 @@
 import os
 import json
-from flask import request, render_template, current_app
+from flask import redirect, request, render_template, current_app, url_for
 from . import main
 from config import db_config
 import mysql.connector
@@ -111,5 +111,45 @@ def staff_details(staff_id):
         return render_template('staff_details.html', staff=staff)
     else:
         return "Staff member not found", 404
+    
+# This route handles the sign-up form. It displays the form on GET requests and processes the form on POST requests.    
+@main.route('/sign_up', methods=['GET', 'POST'])
+def sign_up():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')  # Make sure to hash this in production!
+
+        try:
+            # Connect to the database
+            conn = mysql.connector.connect(**db_config)
+            cursor = conn.cursor()
+
+            # Insert the user into the signup table
+            insert_query = """
+                INSERT INTO signup (username, email, password)
+                VALUES (%s, %s, %s)
+            """
+            cursor.execute(insert_query, (username, email, password))
+            conn.commit()
+
+        except mysql.connector.Error as err:
+            print(f"Database error: {err}")
+            # Optionally render an error page
+            return "An error occurred while signing up."
+
+        finally:
+            cursor.close()
+            conn.close()
+
+        # Redirect to the success page
+        return redirect(url_for('main.sign_up_success'))
+
+    return render_template('sign_up.html')
+
+@main.route('/sign_up_success')
+def sign_up_success():
+    return render_template('sign_up_success.html')
+
    
 

@@ -7,7 +7,7 @@
 
 <form id="filter-form" method="get" action="{{ url_for('main.json_dropdown') }}">
   <label for="department">Filter by Department:</label>
-  <select name="department" id="department" onchange="document.getElementById('filter-form').submit();">
+  <select name="department" id="department">
     <option value="">All Departments</option>
     {% for dept in departments %}
       <option value="{{ dept }}" {% if dept == selected %}selected{% endif %}>{{ dept }}</option>
@@ -31,4 +31,7 @@
     <p>No results found.</p>
   {% endfor %}
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/filter.js') }}"></script>
 {% endblock %}

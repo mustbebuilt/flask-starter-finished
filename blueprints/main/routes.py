@@ -1,6 +1,6 @@
 import os
 import json
-from flask import redirect, request, render_template, current_app, url_for
+from flask import jsonify, redirect, request, render_template, current_app, url_for
 from . import main
 from config import db_config
 import mysql.connector
@@ -151,5 +151,23 @@ def sign_up():
 def sign_up_success():
     return render_template('sign_up_success.html')
 
-   
+@main.route('/api/staff')
+def get_staff_json():
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM staff")
+    rows = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(rows)
+
+@main.route('/api/staff/<int:staff_id>')
+def get_staff_by_id_json(staff_id):
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM staff WHERE id = %s", (staff_id,))
+    row = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return jsonify(row)
 

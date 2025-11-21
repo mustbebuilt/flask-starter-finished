@@ -61,7 +61,6 @@ def json_filtered():
         filtered_data = [s for s in staff_data if s['department'].lower() == department_filter.lower()]
     else:
         filtered_data = staff_data
-
     return render_template('json_filtered.html', staffData=filtered_data, selected=department_filter)
 @main.route('/json_dropdown', methods=['GET'])
 def json_dropdown():

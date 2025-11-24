@@ -3,6 +3,7 @@ import json
 from flask import jsonify, redirect, request, render_template, current_app, url_for
 from . import main
 from config import db_config
+from db import query, execute
 import mysql.connector
 
 @main.route('/')
@@ -90,26 +91,14 @@ def json_dropdown():
     )
 @main.route('/db_data')
 def db_data():
-    conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM staff")
-    data = cursor.fetchall()
-    cursor.close()
-    conn.close()
+    data = query("SELECT * FROM staff")
     return render_template('db_data.html', data=data)
 @main.route('/staff/<int:staff_id>')
 def staff_details(staff_id):
-    conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM staff WHERE id = %s", (staff_id,))
-    staff = cursor.fetchone()
-    cursor.close()
-    conn.close()
-    
+    staff = query("SELECT * FROM staff WHERE id = %s", (staff_id,), fetchone=True)
     if staff:
         return render_template('staff_details.html', staff=staff)
-    else:
-        return "Staff member not found", 404
+    return "Staff member not found", 404
     
 # This route handles the sign-up form. It displays the form on GET requests and processes the form on POST requests.    
 @main.route('/sign_up', methods=['GET', 'POST'])
@@ -152,21 +141,10 @@ def sign_up_success():
 
 @main.route('/api/staff')
 def get_staff_json():
-    conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM staff")
-    rows = cursor.fetchall()
-    cursor.close()
-    conn.close()
+    rows = query("SELECT * FROM staff")
     return jsonify(rows)
 
 @main.route('/api/staff/<int:staff_id>')
 def get_staff_by_id_json(staff_id):
-    conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM staff WHERE id = %s", (staff_id,))
-    row = cursor.fetchone()
-    cursor.close()
-    conn.close()
-    return jsonify(row)
-
+    row = query("SELECT * FROM staff WHERE id = %s", (staff_id,), fetchone=True)
+    return jsonify(row) 
